@@ -1,0 +1,35 @@
+--CUSTOMER
+INSERT INTO CUSTOMER VALUE(1,'Mr.','Jack','Ma',1945-04-11,'China','HangZhou','123 Alibaba Street','340003','Gold','13333333333','jackma@gmail.com');
+
+--GUEST
+INSERT INTO GUEST VALUE(1,'Mr.','Jack','Ma',1945-04-11,'China','HangZhou','123 Alibaba Street','340003','13333333333','jackma@gmail.com');
+INSERT INTO GUEST VALUE(2,'Mrs.','Lucy','Huang',1985-09-1,'China','Beijing','123 TianAnMen Street','310001','14444444444','lucyhuang@gmail.com');
+
+--HOTEL
+INSERT INTO HOTEL VALUE('HT00001','Best Hotel','5 Star',2000,'Australia','Melbourne','123 Caulfield Street','011-2222222','besthotel@gmail.com');
+
+--MEMBERSHIP
+INSERT INTO MEMBERSHIP VALUE('Platinum',3000,0.15,'check out time extended to 19:00 p.m.');
+INSERT INTO MEMBERSHIP VALUE('Gold',1500,0.15,'check out time extended to 17:00 p.m.');
+INSERT INTO MEMBERSHIP VALUE('Silver',1000,0.10,'check out time extended to 16:00 p.m.');
+INSERT INTO MEMBERSHIP VALUE('Bronze',500,0.07,'check out time extended to 15:00 p.m.');
+
+--PAYMENT
+INSERT INTO PAYMENT VALUE('PM00001','BK00001',2016-09-27,'Credit',3000);
+
+--BOOKING
+INSERT INTO BOOKING VALUE('BK00001',1,2016-09-27,2016-09-30,'Richard Guo','sample@email.com',3);
+
+--BOOKING_ROOM_GUESTS
+INSERT INTO BOOKING_ROOM_GUESTS VALUE('BK00001','HT00001','',1);
+
+--ROOM
+INSERT INTO ROOM VALUE('303','HT00001','Double',2,500,'Nice Room');
+
+--FACILITIES
+INSERT INTO FACILITIES VALUE(1,'High Chair');
+INSERT INTO FACILITIES VALUE(2,'Stainless kettle');
+
+--ROOM_FACILITIES
+INSERT INTO ROOM_FACILITIES VALUES('303','HT00001',1,2);
+INSERT INTO ROOM_FACILITIES VALUES('303','HT00001',2,1);

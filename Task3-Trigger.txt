@@ -1,0 +1,46 @@
+--FIT5148A--
+--Trigger
+create or replace TRIGGER HOTEL_CHECK 
+after DELETE OR UPDATE OF HOTEL_ID ON HOTEL 
+for each row
+BEGIN
+    if updating then
+        update room@fit5148b
+        set hotel_id = :new.hotel_id
+        where hotel_id = :old.hotel_id;        
+    end if;
+    if deleting then
+        update room@fit5148b
+        set hotel_id = 'del'  --:old.hotel_id || '*'
+        where hotel_id = :old.hotel_id;
+    end if;
+END;
+
+
+FIT5148B
+--Procedure
+create or replace PROCEDURE getHotelId(
+p_hotel_id out room.hotel_id%type, 
+hid in room.hotel_id%type) 
+AS
+begin
+    select hotel_id  into p_hotel_id from (select distinct hotel_id from hotel@fit5148a where hotel_id = hid);
+        DBMS_OUTPUT.PUT_LINE('Hotel exits.');
+exception
+    when others then
+          DBMS_OUTPUT.PUT_LINE('No such hotel.');
+end getHotelId;
+
+--Trigger
+CREATE OR REPLACE trigger S27298515.insert_room
+before insert on room
+for each row
+declare
+        htid room.hotel_id%type;
+begin
+       getHotelId(htid,:new.hotel_id);
+       if htid is null then
+          rollback;
+          end if;
+END;
+
