@@ -24,10 +24,12 @@ insert into customer values (customerid.nextval, 'Mr', 'Tony','Stark', '08-Sep-1
 select * from customer
 
 --booking
-insert into booking values ('00000001', '10001', '07-Mar-2017','10-Mar-2017','JIO','sds@sdf.com',0,'unpaid');
-insert into booking values ('00000002', '10001', '05-Mar-2017','06-Mar-2017','JIO','sds@sdf.com',0,'unpaid');
-insert into booking values ('00000003', '10000', '06-Mar-2017','07-Mar-2017','JIO','sds@sdf.com',0,'unpaid');
+insert into booking values ('00000001', '10002', '0001','0101','07-Mar-2017','09-Mar-2017','JIO','sds@sdf.com',0,'unpaid');
+insert into booking values ('00000001', '10002', '0001','0102','07-Mar-2017','09-Mar-2017','JIO','sds@sdf.com',0,'unpaid');
 
+insert into booking values ('00000002', '10002', '0001','0101','05-Mar-2017','10-Mar-2017','JIO','sds@sdf.com',0,'unpaid');
+insert into booking values ('00000003', '10003', '0001','0103','06-Mar-2017','08-Mar-2017','JIO','sds@sdf.com',0,'unpaid');
+delete from booking
 
 select * from booking
 
@@ -43,13 +45,16 @@ delete from guest
 select * from guest
 
 --booking_room_guests
-insert into booking_room_guests values('00000001','0001 ','0101','00001');
-insert into booking_room_guests values('00000001','0001 ','0101','00002');
-insert into booking_room_guests values('00000002','0001 ','0101','00001');
-insert into booking_room_guests values('00000003','0001 ','0103','00001');
-insert into booking_room_guests values('00000003','0001 ','0103','00002');
-insert into booking_room_guests values('00000003','0001 ','0103','00003');
-insert into booking_room_guests values('00000003','0001 ','0103','00004');
+insert into booking_room_guests values('00000001','0001','0101','00001');
+insert into booking_room_guests values('00000001','0001','0101','00002');
+insert into booking_room_guests values('00000002','0001','0101','00001');
+insert into booking_room_guests values('00000003','0001','0103','00001');
+insert into booking_room_guests values('00000003','0001','0103','00002');
+insert into booking_room_guests values('00000003','0001','0103','00003');
+insert into booking_room_guests values('00000003','0001','0103','00004');
+
+select * from  booking_room_guests
+select to_char(check_out_date)  from  booking where booking_id = '00000001' and room_num = '0101' and hotel_id = '0001';
 
 delete from booking_room_guests
 select nvl(count(guest_id),null)  from booking_room_guests where booking_id = '00000003' group by (booking_id, hotel_id, room_num);
@@ -59,9 +64,10 @@ rollback
 select * from booking_room_guests
 
 --payment
-insert into payment values('000001','00000001','27-Mar-2017','Cash',(select total_amount from booking where booking_id = '00000001'))
+insert into payment values('000001','00000001','27-Mar-2017','Cash',(select total_amount from booking where booking_id = '00000001'),'0001','0101')
 insert into payment values('000002','00000002','27-Mar-2017','Cash',(select total_amount from booking where booking_id = '00000002'))
 
+select * from payment
 
 select count(guest_id) from booking_room_guests where booking_id = '00000003' group by (booking_id, hotel_id, room_num)
 select room_occ from room where room_number = '0103' and hotel_id = '0001'
